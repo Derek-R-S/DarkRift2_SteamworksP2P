@@ -20,7 +20,9 @@ PR are always welcome! ☺
 - [Steamworks.NET](https://github.com/rlabrecque/Steamworks.NET/releases)
 
 **DarkRift2 Setup**
+
 DarkRift2 has a bug where it does not find plugins by default in Unity.
+
 To fix this, open the script __Assets/DarkRift/DarkRift/Plugins/Server/UnityServerHelper.cs__
 Change line 40 from
 ```c#
@@ -74,7 +76,7 @@ Optionally there are also settings for the client like the server.
 You can change the size of the allocated byte arrays and NoDelay option.
 Example:
 ```c#
-GetComponent<UnityClient>().Client.ConnectInBackground(new SteamClientConnection(ulong.Parse(serverID.text), 1400, false));
+GetComponent<UnityClient>().Client.ConnectInBackground(new SteamClientConnection(LOBBYIDHERE, 1400, false));
 ```
 
 The listener will automatically join the steam lobby so no need to join it before hand and it will also handle leaving the lobby when you call Disconnect.
