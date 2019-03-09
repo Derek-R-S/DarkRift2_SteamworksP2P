@@ -70,7 +70,6 @@ public class SteamClientConnection : NetworkClientConnection
     }
 
     void OnLobbyEnter(LobbyEnter_t pCallback) {
-        Debug.Log(pCallback.m_ulSteamIDLobby + " : " + pCallback.m_EChatRoomEnterResponse);
 		if(pCallback.m_EChatRoomEnterResponse == (uint)EChatRoomEnterResponse.k_EChatRoomEnterResponseSuccess){
             Connected = true;
             LobbyOwner = SteamMatchmaking.GetLobbyOwner(new CSteamID(LobbyID));
