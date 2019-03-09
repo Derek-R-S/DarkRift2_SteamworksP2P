@@ -1,6 +1,9 @@
 # DarkRift2 - Steamworks P2P listener
 A listener that enables communication via steam's P2P networking system.
 
+## Download
+[Steam P2P Listener](https://github.com/Derek-R-S/DarkRift2_SteamworksP2P/releases/tag/0.2)
+
 ## Features
 - Uses Steam's Relay, no more NAT problems.
 - Steam's matchmaking, this uses lobbies so matchmaking is easy to setup.
