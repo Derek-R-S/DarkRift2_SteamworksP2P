@@ -1,11 +1,11 @@
 # DarkRift2 - Steamworks P2P listener
 A listener that enables communication via steam's P2P networking system.
 
-### Features
+## Features
 - Uses Steam's Relay, no more NAT problems.
 - Steam's matchmaking, this uses lobbies so matchmaking is easy to setup.
 
-### Notes
+## Notes
 
 If Steamworks is not initialized, it will fail to create/join a lobby.
 
@@ -15,7 +15,7 @@ This does not support dedicated servers at the moment, I am planning on making a
 
 PR are always welcome! ☺
 
-### Prerequisites
+## Prerequisites
 - [DarkRift 2](https://assetstore.unity.com/packages/tools/network/darkrift-networking-2-95309)
 - [Steamworks.NET](https://github.com/rlabrecque/Steamworks.NET/releases)
 
@@ -39,7 +39,7 @@ GetComponent<XmlUnityServer>().Server.ClientManager.ClientDisconnected += (s, c)
 ```
 
 
-### Listener Config
+## Listener Config
 
 All of the settings in the listener have default values, which means you can start it without any settings and it will work fine.
 
@@ -63,7 +63,7 @@ Settings:
 </listener>
 ```
 
-### Client Connecting
+## Client Connecting
 
 To connect a client you will need a lobby ID of the match you want to join. You can obtain one from the steam matchmaking service. The lobbyID is in the type of a ulong (uint64)
 
