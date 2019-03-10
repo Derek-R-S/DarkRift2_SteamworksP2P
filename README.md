@@ -26,8 +26,9 @@ PR are always welcome! ☺
 
 **DarkRift2 Setup**
 
-DarkRift2 has a bug where it does not find plugins by default in Unity.
+DarkRift2 has a bug where it [does not find plugins by default in Unity.](https://github.com/DarkRiftNetworking/DarkRift/issues/58)
 
+Doing this workaround may cause issues that I am unaware of, but it seems to work fine.
 To fix this, open the script __Assets/DarkRift/DarkRift/Plugins/Server/UnityServerHelper.cs__
 Change line 40 from
 ```c#
@@ -38,7 +39,7 @@ to
 if (type.IsSubclassOf(typeof(PluginBase)) && !type.IsAbstract)
 ```
 
-Another DarkRift2 bug is that it will not properly dispose of clients unless you have a callback on your XmlUnityServer.Server.ClientManager.ClientDisconnected. Simply adding the following line to where you have your server will fix this issue.
+Another DarkRift2 bug is that it will [not properly dispose of clients unless you have a callback on your XmlUnityServer.Server.ClientManager.ClientDisconnected](https://github.com/DarkRiftNetworking/DarkRift/issues/68). Simply adding the following line to where you have your server will fix this issue.
 ```c#
 GetComponent<XmlUnityServer>().Server.ClientManager.ClientDisconnected += (s, c) => Debug.Log("Client Disconnected.");
 ```
