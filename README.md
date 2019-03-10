@@ -16,6 +16,8 @@ Demo Repository for this listener is coming soon.
 
 This does not support dedicated servers at the moment, I am planning on making another listener using their new socket system which will support dedicated servers.
 
+This only supports unity builds, the .NET core/framework DarkRift server will not work with this.
+
 PR are always welcome! ☺
 
 ## Prerequisites
