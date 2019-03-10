@@ -26,7 +26,7 @@ PR are always welcome! ☺
 
 **DarkRift2 Setup**
 
-DarkRift2 has a bug where it [does not find plugins by default in Unity.](https://github.com/DarkRiftNetworking/DarkRift/issues/58)
+DarkRift2 has a bug where it [does not find listeners by default in Unity.](https://github.com/DarkRiftNetworking/DarkRift/issues/58)
 
 Doing this workaround may cause issues that I am unaware of, but it seems to work fine.
 To fix this, open the script __Assets/DarkRift/DarkRift/Plugins/Server/UnityServerHelper.cs__
