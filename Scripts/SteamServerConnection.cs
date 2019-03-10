@@ -11,17 +11,30 @@ public class SteamServerConnection : NetworkServerConnection
 {
     public override ConnectionState ConnectionState => LobbyHasUser() ? ConnectionState.Connected : ConnectionState.Disconnected;
     public override IEnumerable<IPEndPoint> RemoteEndPoints => new IPEndPoint[1] { DummyEndPoint };
-    private IPEndPoint DummyEndPoint = new IPEndPoint(0, 0);
+    private IPEndPoint DummyEndPoint;
     public CSteamID RemoteID;
     private SteamListener Listener;
     private byte[] SendUnreliableData;
     private byte[] SendReliableData;
 
-    public SteamServerConnection(ulong steamID, SteamListener listener){
+    public SteamServerConnection(ulong steamID, SteamListener listener, int endPointCount, out long userAddress){
         Listener = listener;
         RemoteID = new CSteamID(steamID);
         SendReliableData = new byte[Listener.DataSize];
         SendUnreliableData = new byte[Listener.DataSize];
+
+        byte[] fakeAddress = new byte[4];
+        fakeAddress[0] = (byte)(endPointCount > 255 ? 255 : endPointCount);
+        endPointCount -= fakeAddress[0];
+        fakeAddress[1] = (byte)(endPointCount > 255 ? 255 : endPointCount);
+        endPointCount -= fakeAddress[1];
+        fakeAddress[2] = (byte)(endPointCount > 255 ? 255 : endPointCount);
+        endPointCount -= fakeAddress[2];
+        fakeAddress[3] = (byte)(endPointCount > 255 ? 255 : endPointCount);
+        endPointCount -= fakeAddress[3];
+
+        DummyEndPoint = new IPEndPoint(new IPAddress(fakeAddress), 0);
+        userAddress = DummyEndPoint.Address.Address;
     }
 
     bool LobbyHasUser(){

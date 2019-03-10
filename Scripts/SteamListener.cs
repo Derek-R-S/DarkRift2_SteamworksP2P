@@ -5,6 +5,7 @@ using DarkRift.Server;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 using Steamworks;
 using Version = System.Version;
 
@@ -23,6 +24,10 @@ public class SteamListener : NetworkListener
     public CSteamID CLobbyID;
     private List<SteamServerConnection> ConnectedUsers;
     private byte[] RecvData;
+    // So the currentEndPointCount is a tad bit jank solution to getting data.
+    // Theres no way (as of now) to get any extra data from an IClient
+    // so we use fake endpoints which correlate to data, such as steamIDs. :P
+    private int currentEndPointCount;
 
     // Calbacks
     private CallResult<LobbyCreated_t> OnLobbyCreatedCallResult;
@@ -41,6 +46,7 @@ public class SteamListener : NetworkListener
         OnLobbyCreatedCallResult = CallResult<LobbyCreated_t>.Create(OnLobbyCreated);
         m_LobbyChatUpdate = Callback<LobbyChatUpdate_t>.Create(OnLobbyChatUpdate);
         m_P2PSessionRequest = Callback<P2PSessionRequest_t>.Create(OnP2PSessionRequest);
+        currentEndPointCount = 0;
 	}
 
     public override void StartListening(){
@@ -108,7 +114,9 @@ public class SteamListener : NetworkListener
             if(SteamMatchmaking.GetLobbyMemberByIndex(CLobbyID, i).m_SteamID == pCallback.m_steamIDRemote.m_SteamID){
                 if(SteamNetworking.AcceptP2PSessionWithUser(pCallback.m_steamIDRemote)){
                     WriteEvent($"Accepted P2P Connection With User: {pCallback.m_steamIDRemote.m_SteamID}", LogType.Info);
-                    SteamServerConnection NewClient = new SteamServerConnection(pCallback.m_steamIDRemote.m_SteamID, this);
+                    long fakeAddress = 0;
+                    SteamServerConnection NewClient = new SteamServerConnection(pCallback.m_steamIDRemote.m_SteamID, this, Interlocked.Increment(ref currentEndPointCount), out fakeAddress);
+                    SteamMatchmaking.SetLobbyData(CLobbyID, fakeAddress.ToString(), pCallback.m_steamIDRemote.m_SteamID.ToString());
                     RegisterUser(NewClient);
                     RegisterConnection(NewClient);
                 }
@@ -161,6 +169,11 @@ public class SteamListener : NetworkListener
     public void UnregisterUser(SteamServerConnection user){
         lock(ConnectedUsers)
             ConnectedUsers.Remove(user);
+    }
+
+    public static ulong GetUsersSteamID(IClient client){
+        ulong steamID = ulong.TryParse(SteamMatchmaking.GetLobbyData(new CSteamID(LobbyID), client.GetRemoteEndPoint("").Address.Address.ToString()), out steamID) ? steamID : 0;
+        return steamID;
     }
 }
 

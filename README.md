@@ -2,7 +2,7 @@
 A listener that enables communication via steam's P2P networking system.
 
 ## Download
-[Steam P2P Listener](https://github.com/Derek-R-S/DarkRift2_SteamworksP2P/releases/tag/0.2)
+[Steam P2P Listener](https://github.com/Derek-R-S/DarkRift2_SteamworksP2P/releases/tag/0.3)
 
 ## Features
 - Uses Steam's Relay, no more NAT problems.
@@ -85,3 +85,18 @@ GetComponent<UnityClient>().Client.ConnectInBackground(new SteamClientConnection
 ```
 
 The listener will automatically join the steam lobby so no need to join it before hand and it will also handle leaving the lobby when you call Disconnect.
+
+## Getting a clients SteamID
+In your game you will probably want some way to get a clients steamID, for their name, avatar, leaderboards, etc.
+
+You can only get a clients steamID from the server. The server can send other players steamIDs to players and they can get names/avatars also.
+
+Getting a players steamID, you use the following function, which returns a ulong
+```c#
+SteamListener.GetUsersSteamID(DarkRift.Server.IClient)
+```
+
+Example:
+```c#
+Debug.Log("New Data from SteamID: " + SteamListener.GetUsersSteamID(messageReceivedEventArgs.Client));
+```
