@@ -12,11 +12,7 @@ A listener that enables communication via steam's P2P networking system.
 
 If Steamworks is not initialized, it will fail to create/join a lobby.
 
-Demo Repository for this listener is coming soon.
-
-This does not support dedicated servers at the moment, I am planning on making another listener using their new socket system which will support dedicated servers.
-
-This only supports unity builds, the .NET core/framework DarkRift server will not work with this.
+This is for games where one player acts as the host, so this will not work for dedicated servers or the standalone darkrift server.
 
 PR are always welcome! ☺
 
