@@ -55,7 +55,7 @@ public class SteamServerConnection : NetworkServerConnection
     {
         using (MessageBuffer buffer = MessageBuffer.Create(Length))
         {
-            Buffer.BlockCopy(MessageData, 0, buffer.Buffer, buffer.Offset, Length);
+            Buffer.BlockCopy(MessageData, 0, buffer.Buffer, 0, Length);
             buffer.Count = Length;
             HandleMessageReceived(buffer, reliable ? SendMode.Reliable : SendMode.Unreliable);
         }
@@ -66,7 +66,7 @@ public class SteamServerConnection : NetworkServerConnection
         if(message.Count > Listener.DataSize)
             throw new Exception("Data Size on SteamListener is too small for message!");
 
-        Buffer.BlockCopy(message.Buffer, message.Offset, SendReliableData, 0, message.Count);
+        Buffer.BlockCopy(message.Buffer, 0, SendReliableData, 0, message.Count);
 
         return SteamNetworking.SendP2PPacket(RemoteID, SendReliableData, (uint)message.Count, Listener.NoDelay ? EP2PSend.k_EP2PSendReliable : EP2PSend.k_EP2PSendReliableWithBuffering, 1);
     }
@@ -76,7 +76,7 @@ public class SteamServerConnection : NetworkServerConnection
         if(message.Count > Listener.DataSize)
             throw new Exception("Data Size on SteamListener is too small for message!");
 
-        Buffer.BlockCopy(message.Buffer, message.Offset, SendUnreliableData, 0, message.Count);
+        Buffer.BlockCopy(message.Buffer, 0, SendUnreliableData, 0, message.Count);
 
         return SteamNetworking.SendP2PPacket(RemoteID, SendUnreliableData, (uint)message.Count, Listener.NoDelay ? EP2PSend.k_EP2PSendUnreliableNoDelay : EP2PSend.k_EP2PSendUnreliable, 0);
     }
